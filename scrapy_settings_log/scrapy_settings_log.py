@@ -26,7 +26,7 @@ class SpiderSettingsLogging:
 
         # nested settings will be BaseSettings objects that are not JSON seriable
         settings = {
-            k: dict(v) if type(v) == BaseSettings else v for k, v in settings.items()
+            k: dict(v) if type(v) is BaseSettings else v for k, v in settings.items()
         }
 
         logger.debug(json.dumps(settings, indent=indent))

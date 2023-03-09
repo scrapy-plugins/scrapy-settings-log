@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="scrapy-settings-log",
-    version="1.0.2",
+    version="1.0.3",
     author="Roy Healy",
     author_email="roy.healy87@gmail.com",
     description="An extension that allows a user to display all or some of their scrapy spider settings at runtime.",

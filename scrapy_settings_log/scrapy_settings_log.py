@@ -29,4 +29,4 @@ class SpiderSettingsLogging:
             k: dict(v) if type(v) is BaseSettings else v for k, v in settings.items()
         }
 
-        logger.debug(json.dumps(settings, indent=indent))
+        logger.info(json.dumps(settings, indent=indent))

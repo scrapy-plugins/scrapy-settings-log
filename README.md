@@ -25,5 +25,5 @@ When you run your spider you will see a debug log like below when spider is clos
 
 ## Additional Options
 
-* `SETTINGS_LOGGING_REGEX` - Add a regular expression to only show some settings - for example `SETTINGS_LOGGING_REGEX = "SPIDERMON" will show spidermon logs.
+* `SETTINGS_LOGGING_REGEX` - Add a regular expression to only show some settings - for example `SETTINGS_LOGGING_REGEX = "SPIDERMON"` will show spidermon logs.
 * `SETTINGS_LOGGING_INDENT` - Add indentation to make log more human-readable.

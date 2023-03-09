@@ -1,0 +1,1 @@
+from scrapy_settings_log.scrapy_settings_log import SpiderSettingsLogging

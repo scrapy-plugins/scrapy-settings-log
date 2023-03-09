@@ -1,6 +1,6 @@
 from scrapy import Spider
 from scrapy.crawler import Crawler
-from scrapy_settings_log.scrapy_settings_log import SpiderSettingsLogging
+from scrapy_settings_log import SpiderSettingsLogging
 import logging
 
 LOGGER = logging.getLogger(__name__)

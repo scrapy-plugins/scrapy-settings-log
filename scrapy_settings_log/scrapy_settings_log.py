@@ -20,7 +20,6 @@ class SpiderSettingsLogging:
             return
 
         regex = settings.get("SETTINGS_LOGGING_REGEX")
-        indent = settings.get("SETTINGS_LOGGING_INDENT")
         if regex is not None:
             settings = {k: v for k, v in settings.items() if re.search(regex, k)}
 
@@ -28,5 +27,9 @@ class SpiderSettingsLogging:
         settings = {
             k: dict(v) if type(v) is BaseSettings else v for k, v in settings.items()
         }
+        self.output_settings(settings)
 
+    def output_settings(self, settings: dict):
+        # this can be overwritten in a subclass if you want to send this data elsewhere
+        indent = settings.get("SETTINGS_LOGGING_INDENT")
         logger.info(json.dumps(settings, indent=indent))

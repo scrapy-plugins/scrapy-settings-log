@@ -33,5 +33,5 @@ class SpiderSettingsLogging:
 
     def output_settings(self, settings: dict, spider: scrapy.Spider):
         # this can be overwritten in a subclass if you want to send this data elsewhere
-        indent = spider.settings.getint("SETTINGS_LOGGING_INDENT")
+        indent = spider.settings.get("SETTINGS_LOGGING_INDENT")
         logger.info(json.dumps(settings, indent=indent))

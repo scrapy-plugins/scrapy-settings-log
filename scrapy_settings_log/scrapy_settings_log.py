@@ -1,6 +1,8 @@
 import logging
 import json
 import re
+
+import scrapy
 from scrapy import signals
 from scrapy.settings import BaseSettings
 
@@ -27,9 +29,9 @@ class SpiderSettingsLogging:
         settings = {
             k: dict(v) if type(v) is BaseSettings else v for k, v in settings.items()
         }
-        self.output_settings(settings)
+        self.output_settings(settings, spider)
 
-    def output_settings(self, settings: dict):
+    def output_settings(self, settings: dict, spider: scrapy.Spider):
         # this can be overwritten in a subclass if you want to send this data elsewhere
-        indent = settings.get("SETTINGS_LOGGING_INDENT")
+        indent = spider.settings.getint("SETTINGS_LOGGING_INDENT")
         logger.info(json.dumps(settings, indent=indent))

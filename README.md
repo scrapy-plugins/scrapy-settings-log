@@ -21,7 +21,7 @@ SETTINGS_LOGGING_ENABLED = True
 
 When you run your spider you will see a debug log like below when spider is closing:
 
-`[scrapy_settings_log.scrapy_settings_log] INFO: {"SETTINGS_LOGGING_ENABLED": true, ...}`
+`[scrapy_settings_log] INFO: {"SETTINGS_LOGGING_ENABLED": true, ...}`
 
 ## Additional Options
 

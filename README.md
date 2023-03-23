@@ -27,3 +27,16 @@ When you run your spider you will see a debug log like below when spider is clos
 
 * `SETTINGS_LOGGING_REGEX` - Add a regular expression to only show some settings - for example `SETTINGS_LOGGING_REGEX = "SPIDERMON"` will show settings with SPIDERMON in their name.
 * `SETTINGS_LOGGING_INDENT` - Add indentation to make log more human-readable.
+
+## Advanced
+
+Subclass and override the `output_settings` method if you want the settings to be reported in another way.
+
+```python
+from scrapy_settings_log import SpiderSettingsLogging
+
+class CustomSettingsLogger(SpiderSettingsLogging):
+
+    def  output_settings(self, settings: dict, spider: scrapy.Spider):
+        # custom code here
+```

@@ -19,7 +19,7 @@ EXTENSIONS = {
 SETTINGS_LOGGING_ENABLED = True
 ```
 
-When you run your spider you will see a debug log like below when spider is closing:
+When you run your spider you will see a log like below when spider is closing:
 
 `[scrapy_settings_log] INFO: {"SETTINGS_LOGGING_ENABLED": true, ...}`
 

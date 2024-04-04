@@ -1,7 +1,9 @@
+import logging
+
 from scrapy import Spider
 from scrapy.crawler import Crawler
+
 from src.scrapy_settings_log import SpiderSettingsLogging
-import logging
 
 LOGGER = logging.getLogger(__name__)
 
@@ -93,11 +95,11 @@ def test_log_custom_class(caplog):
     settings = {
         "SETTINGS_LOGGING_ENABLED": True,
         "SETTINGS_LOGGING_REGEX": "DUMMY",
-        "DUMMY_CUSTOM_CLASS": {CustomClass: "/foo/bar"}
+        "DUMMY_CUSTOM_CLASS": {CustomClass: "/foo/bar"},
     }
     spider = MockSpider(settings)
     logger = SpiderSettingsLogging()
     with caplog.at_level(logging.INFO):
         logger.spider_closed(spider)
 
-    assert '{"DUMMY_CUSTOM_CLASS": {"CustomClass": "/foo/bar"}}' in  caplog.text
+    assert '{"DUMMY_CUSTOM_CLASS": {"CustomClass": "/foo/bar"}}' in caplog.text

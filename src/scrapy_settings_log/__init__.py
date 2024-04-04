@@ -1,13 +1,11 @@
-import logging
 import inspect
 import json
+import logging
 import re
-
-from collections.abc import Mapping, Iterable
+from collections.abc import Iterable, Mapping
 
 import scrapy
 from scrapy import signals
-from scrapy.settings import BaseSettings
 
 logger = logging.getLogger(__name__)
 
@@ -25,7 +23,10 @@ def prepare_for_json_serialization(obj):
     if isinstance(obj, (str, int, float, bool)) or obj is None:
         return obj
     elif isinstance(obj, Mapping):
-        return {str(prepare_for_json_serialization(k)): prepare_for_json_serialization(v) for k, v in obj.items()}
+        return {
+            str(prepare_for_json_serialization(k)): prepare_for_json_serialization(v)
+            for k, v in obj.items()
+        }
     elif isinstance(obj, Iterable):
         return [prepare_for_json_serialization(v) for v in obj]
     elif inspect.isclass(obj):

@@ -82,4 +82,22 @@ def test_log_set(caplog):
     with caplog.at_level(logging.INFO):
         logger.spider_closed(spider)
 
-    assert '{"DUMMY_SET": "{1, 2, 3}"}' in caplog.text
+    assert '{"DUMMY_SET": [1, 2, 3]}' in caplog.text
+
+
+def test_log_custom_class(caplog):
+
+    class CustomClass:
+        pass
+
+    settings = {
+        "SETTINGS_LOGGING_ENABLED": True,
+        "SETTINGS_LOGGING_REGEX": "DUMMY",
+        "DUMMY_CUSTOM_CLASS": {CustomClass: "/foo/bar"}
+    }
+    spider = MockSpider(settings)
+    logger = SpiderSettingsLogging()
+    with caplog.at_level(logging.INFO):
+        logger.spider_closed(spider)
+
+    assert '{"DUMMY_CUSTOM_CLASS": {"CustomClass": "/foo/bar"}}' in  caplog.text

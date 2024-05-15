@@ -118,8 +118,6 @@ def test_log_all_should_not_return_apikey_value_by_default(caplog):
     with caplog.at_level(logging.INFO):
         logger.spider_closed(spider)
 
-    # won't check specifics here as the default settings
-    # can vary with scrapy versions - presence is enough
     assert '"APIKEY": "*************"' in caplog.text
     assert '"apikey": "*************"' in caplog.text
     assert '"api_key": "*************"' in caplog.text
@@ -138,8 +136,6 @@ def test_log_all_should_return_apikey_value_if_MASKED_SENSITIVE_SETTINGS_ENABLED
     with caplog.at_level(logging.INFO):
         logger.spider_closed(spider)
 
-    # won't check specifics here as the default settings
-    # can vary with scrapy versions - presence is enough
     assert '"APIKEY": "apikey_value"' in caplog.text
 
 
@@ -155,8 +151,24 @@ def test_log_all_should_not_return_aws_secret_key_value_by_default(caplog):
     with caplog.at_level(logging.INFO):
         logger.spider_closed(spider)
 
-    # won't check specifics here as the default settings
-    # can vary with scrapy versions - presence is enough
     assert '"AWS_SECRET_ACCESS_KEY": "*************"' in caplog.text
     assert '"aws_secret_access_key": "*************"' in caplog.text
     assert 'secret_value' not in caplog.text
+
+
+def test_log_all_should_return_only_the_custom_regex_data_masked_if_MASKED_SENSITIVE_SETTINGS_REGEX_LIST_configured(caplog):
+    settings = {
+        "SETTINGS_LOGGING_ENABLED": True,
+        "MASKED_SENSITIVE_SETTINGS_REGEX_LIST": ["apppppppikey"],
+        "APIKEY": 'apikey_value1',
+        "apppppppikey": 'some_random_value',
+    }
+
+    spider = MockSpider(settings)
+    logger = SpiderSettingsLogging()
+    with caplog.at_level(logging.INFO):
+        logger.spider_closed(spider)
+
+    assert 'apikey_value1' in caplog.text
+    assert '"apppppppikey": "*****************"' in caplog.text
+    assert 'some_random_value' not in caplog.text

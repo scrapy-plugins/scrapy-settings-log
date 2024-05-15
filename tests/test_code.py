@@ -103,3 +103,60 @@ def test_log_custom_class(caplog):
         logger.spider_closed(spider)
 
     assert '{"DUMMY_CUSTOM_CLASS": {"CustomClass": "/foo/bar"}}' in caplog.text
+
+
+def test_log_all_should_not_return_apikey_value_by_default(caplog):
+    settings = {
+        "SETTINGS_LOGGING_ENABLED": True,
+        "APIKEY": 'apikey_value1',
+        "apikey": 'apikey_value2',
+        "api_key": 'apikey_value3',
+    }
+
+    spider = MockSpider(settings)
+    logger = SpiderSettingsLogging()
+    with caplog.at_level(logging.INFO):
+        logger.spider_closed(spider)
+
+    # won't check specifics here as the default settings
+    # can vary with scrapy versions - presence is enough
+    assert '"APIKEY": "*************"' in caplog.text
+    assert '"apikey": "*************"' in caplog.text
+    assert '"api_key": "*************"' in caplog.text
+    assert 'apikey_value' not in caplog.text
+
+
+def test_log_all_should_return_apikey_value_if_MASKED_SENSITIVE_SETTINGS_ENABLED_is_false(caplog):
+    settings = {
+        "SETTINGS_LOGGING_ENABLED": True,
+        "APIKEY": 'apikey_value',
+        "MASKED_SENSITIVE_SETTINGS_ENABLED": False,
+    }
+
+    spider = MockSpider(settings)
+    logger = SpiderSettingsLogging()
+    with caplog.at_level(logging.INFO):
+        logger.spider_closed(spider)
+
+    # won't check specifics here as the default settings
+    # can vary with scrapy versions - presence is enough
+    assert '"APIKEY": "apikey_value"' in caplog.text
+
+
+def test_log_all_should_not_return_aws_secret_key_value_by_default(caplog):
+    settings = {
+        "SETTINGS_LOGGING_ENABLED": True,
+        "AWS_SECRET_ACCESS_KEY": 'secret_value1',
+        "aws_secret_access_key": 'secret_value2',
+    }
+
+    spider = MockSpider(settings)
+    logger = SpiderSettingsLogging()
+    with caplog.at_level(logging.INFO):
+        logger.spider_closed(spider)
+
+    # won't check specifics here as the default settings
+    # can vary with scrapy versions - presence is enough
+    assert '"AWS_SECRET_ACCESS_KEY": "*************"' in caplog.text
+    assert '"aws_secret_access_key": "*************"' in caplog.text
+    assert 'secret_value' not in caplog.text

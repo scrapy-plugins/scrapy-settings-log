@@ -108,8 +108,8 @@ def test_log_custom_class(caplog):
 def test_log_all_should_not_return_apikey_value_by_default(caplog):
     settings = {
         "SETTINGS_LOGGING_ENABLED": True,
-        "APIKEY": 'apikey_value1',
-        "apikey": 'apikey_value2',
+        "SHUB_APIKEY": 'apikey_value1',
+        "shub_apikey": 'apikey_value2',
         "api_key": 'apikey_value3',
     }
 
@@ -118,8 +118,8 @@ def test_log_all_should_not_return_apikey_value_by_default(caplog):
     with caplog.at_level(logging.INFO):
         logger.spider_closed(spider)
 
-    assert '"APIKEY": "*************"' in caplog.text
-    assert '"apikey": "*************"' in caplog.text
+    assert '"SHUB_APIKEY": "*************"' in caplog.text
+    assert '"shub_apikey": "*************"' in caplog.text
     assert '"api_key": "*************"' in caplog.text
     assert 'apikey_value' not in caplog.text
 

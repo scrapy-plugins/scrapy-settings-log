@@ -58,7 +58,7 @@ class SpiderSettingsLogging:
             ]
             regex_list = settings.get("MASKED_SENSITIVE_SETTINGS_REGEX_LIST", default_regexes)
             for reg in regex_list:
-                updated_settings = {k: '*'*len(v) for k, v in settings.items() if re.match(reg, k)}
+                updated_settings = {k: '*'*len(v) for k, v in settings.items() if re.search(reg, k)}
                 settings = {**settings, **updated_settings}
 
         self.output_settings(settings, spider)

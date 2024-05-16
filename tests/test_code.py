@@ -156,6 +156,23 @@ def test_log_all_should_not_return_aws_secret_key_value_by_default(caplog):
     assert 'secret_value' not in caplog.text
 
 
+def test_log_all_should_not_return_password_value_by_default(caplog):
+    settings = {
+        "SETTINGS_LOGGING_ENABLED": True,
+        "test_password": 'secret_value1',
+        "PASSWORD_TEST": 'secret_value2',
+    }
+
+    spider = MockSpider(settings)
+    logger = SpiderSettingsLogging()
+    with caplog.at_level(logging.INFO):
+        logger.spider_closed(spider)
+
+    assert '"test_password": "*************"' in caplog.text
+    assert '"PASSWORD_TEST": "*************"' in caplog.text
+    assert 'secret_value' not in caplog.text
+
+
 def test_log_all_should_return_only_the_custom_regex_data_masked_if_MASKED_SENSITIVE_SETTINGS_REGEX_LIST_configured(caplog):
     settings = {
         "SETTINGS_LOGGING_ENABLED": True,

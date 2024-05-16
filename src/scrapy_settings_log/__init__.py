@@ -53,12 +53,13 @@ class SpiderSettingsLogging:
             settings = {k: v for k, v in settings.items() if re.search(regex, k)}
         if settings.get("MASKED_SENSITIVE_SETTINGS_ENABLED", True):
             default_regexes = [
-                "(?i)(api[\W_]*key)",  # apikey and possible variations
-                "(?i)(AWS[\W_]*SECRET[\W_]*ACCESS[\W_]*KEY)"  # AWS_SECRET_ACCESS_KEY and possible variations
+                ".*(?i)(api[\W_]*key).*",  # apikey and possible variations e.g: shub_apikey or SC_APIKEY
+                ".*(?i)(AWS[\W_]*SECRET[\W_]*ACCESS[\W_]*KEY).*",  # AWS_SECRET_ACCESS_KEY and possible variations
+                ".*(?i)([\W_]*password[\W_]*).*"  # password word
             ]
             regex_list = settings.get("MASKED_SENSITIVE_SETTINGS_REGEX_LIST", default_regexes)
             for reg in regex_list:
-                updated_settings = {k: '*'*len(v) for k, v in settings.items() if re.search(reg, k)}
+                updated_settings = {k: '*'*len(v) if v else v for k, v in settings.items() if re.match(reg, k)}
                 settings = {**settings, **updated_settings}
 
         self.output_settings(settings, spider)

@@ -118,9 +118,9 @@ def test_log_all_should_not_return_apikey_value_by_default(caplog):
     with caplog.at_level(logging.INFO):
         logger.spider_closed(spider)
 
-    assert '"SHUB_APIKEY": "*************"' in caplog.text
-    assert '"shub_apikey": "*************"' in caplog.text
-    assert '"api_key": "*************"' in caplog.text
+    assert '"SHUB_APIKEY": "**********"' in caplog.text
+    assert '"shub_apikey": "**********"' in caplog.text
+    assert '"api_key": "**********"' in caplog.text
     assert 'apikey_value' not in caplog.text
 
 
@@ -151,8 +151,8 @@ def test_log_all_should_not_return_aws_secret_key_value_by_default(caplog):
     with caplog.at_level(logging.INFO):
         logger.spider_closed(spider)
 
-    assert '"AWS_SECRET_ACCESS_KEY": "*************"' in caplog.text
-    assert '"aws_secret_access_key": "*************"' in caplog.text
+    assert '"AWS_SECRET_ACCESS_KEY": "**********"' in caplog.text
+    assert '"aws_secret_access_key": "**********"' in caplog.text
     assert 'secret_value' not in caplog.text
 
 
@@ -168,8 +168,8 @@ def test_log_all_should_not_return_password_value_by_default(caplog):
     with caplog.at_level(logging.INFO):
         logger.spider_closed(spider)
 
-    assert '"test_password": "*************"' in caplog.text
-    assert '"PASSWORD_TEST": "*************"' in caplog.text
+    assert '"test_password": "**********"' in caplog.text
+    assert '"PASSWORD_TEST": "**********"' in caplog.text
     assert 'secret_value' not in caplog.text
 
 
@@ -187,5 +187,5 @@ def test_log_all_should_return_only_the_custom_regex_data_masked_if_MASKED_SENSI
         logger.spider_closed(spider)
 
     assert 'apikey_value1' in caplog.text
-    assert '"apppppppikey": "*****************"' in caplog.text
+    assert '"apppppppikey": "**********"' in caplog.text
     assert 'some_random_value' not in caplog.text

@@ -144,6 +144,7 @@ def test_log_all_should_not_return_aws_secret_key_value_by_default(caplog):
         "SETTINGS_LOGGING_ENABLED": True,
         "AWS_SECRET_ACCESS_KEY": 'secret_value1',
         "aws_secret_access_key": 'secret_value2',
+        "aws_access_key": 'secret_value2',
     }
 
     spider = MockSpider(settings)
@@ -153,6 +154,7 @@ def test_log_all_should_not_return_aws_secret_key_value_by_default(caplog):
 
     assert '"AWS_SECRET_ACCESS_KEY": "**********"' in caplog.text
     assert '"aws_secret_access_key": "**********"' in caplog.text
+    assert '"aws_access_key": "**********"' in caplog.text
     assert 'secret_value' not in caplog.text
 
 

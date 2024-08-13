@@ -54,7 +54,7 @@ class SpiderSettingsLogging:
         if spider.settings.getbool("MASKED_SENSITIVE_SETTINGS_ENABLED", True):
             default_regexes = [
                 ".*(?i)(api[\W_]*key).*",  # apikey and possible variations e.g: shub_apikey or SC_APIKEY
-                ".*(?i)(AWS[\W_]*(SECRET[\W_]*)?ACCESS[\W_]*KEY).*",  # AWS_SECRET_ACCESS_KEY and possible variations
+                ".*(?i)(AWS[\W_]*(SECRET[\W_]*)?(ACCESS)?[\W_]*(KEY|ACCESS[\W_]*KEY))",  # AWS_SECRET_ACCESS_KEY and possible variations
                 ".*(?i)([\W_]*password[\W_]*).*"  # password word
             ]
             regex_list = spider.settings.getlist("MASKED_SENSITIVE_SETTINGS_REGEX_LIST", default_regexes)

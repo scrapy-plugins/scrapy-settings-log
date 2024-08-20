@@ -9,6 +9,12 @@ from scrapy import signals
 
 logger = logging.getLogger(__name__)
 
+DEFAULT_REGEXES = [
+    ".*(?i)(api[\W_]*key).*",  # apikey and variations e.g: shub_apikey or SC_APIKEY
+    ".*(?i)(AWS[\W_]*(SECRET[\W_]*)?(ACCESS)?[\W_]*(KEY|ACCESS[\W_]*KEY))",  # AWS_SECRET_ACCESS_KEY and variations
+    ".*(?i)([\W_]*password[\W_]*).*"  # password word
+]
+
 
 def prepare_for_json_serialization(obj):
     """Prepare the obj recursively for JSON serialization.
@@ -51,6 +57,11 @@ class SpiderSettingsLogging:
         regex = settings.get("SETTINGS_LOGGING_REGEX")
         if regex is not None:
             settings = {k: v for k, v in settings.items() if re.search(regex, k)}
+        if spider.settings.getbool("MASKED_SENSITIVE_SETTINGS_ENABLED", True):
+            regex_list = spider.settings.getlist("MASKED_SENSITIVE_SETTINGS_REGEX_LIST", DEFAULT_REGEXES)
+            for reg in regex_list:
+                updated_settings = {k: '**********' if v else v for k, v in settings.items() if re.match(reg, k)}
+                settings = {**settings, **updated_settings}
 
         self.output_settings(settings, spider)
 

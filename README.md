@@ -27,6 +27,7 @@ When you run your spider you will see a log like below when spider is closing:
 
 * `SETTINGS_LOGGING_REGEX` - Add a regular expression to only show some settings - for example `SETTINGS_LOGGING_REGEX = "SPIDERMON"` will show settings with SPIDERMON in their name.
 * `SETTINGS_LOGGING_INDENT` - Add indentation to make log more human-readable.
+* `MASKED_SENSITIVE_SETTINGS_ENABLED` - Default is `True` - if settings logging is enabled it will mask the value of settings that may be sensitive (password, apikey). For example AWS_SECRET_ACCESS_KEY will have their value shown as **********
 
 ## Advanced
 

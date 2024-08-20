@@ -10,9 +10,9 @@ from scrapy import signals
 logger = logging.getLogger(__name__)
 
 DEFAULT_REGEXES = [
-    r".*(?i)(api[\W_]*key).*",  # apikey and variations e.g: shub_apikey or SC_APIKEY
-    r".*(?i)(AWS[\W_]*(SECRET[\W_]*)?(ACCESS)?[\W_]*(KEY|ACCESS[\W_]*KEY))",  # AWS_SECRET_ACCESS_KEY and variations
-    r".*(?i)([\W_]*password[\W_]*).*",  # password word
+    r"(?i).*(api[\W_]*key).*",  # apikey and variations e.g: shub_apikey or SC_APIKEY
+    r"(?i).*(AWS[\W_]*(SECRET[\W_]*)?(ACCESS)?[\W_]*(KEY|ACCESS[\W_]*KEY))",  # AWS_SECRET_ACCESS_KEY and variations
+    r"(?i).*([\W_]*password[\W_]*).*",  # password word
 ]
 
 
